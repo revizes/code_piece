@@ -4,20 +4,27 @@ graph TD
         A[Activity/Service/BroadcastReceiver] -- IPC (Binder) --> B(ActivityManagerProxy)
     end
 
-    B -- Binder --> C{ActivityManagerService (AMS)}
-
     subgraph "System Server Process"
+        C{ActivityManagerService (AMS)}
+        H{WindowManagerService (WMS)}
+        I{PackageManagerService (PMS)}
+
         C -- Manages --> D[Activity Stack / Task]
         C -- Manages --> E[Process Management]
         C -- Manages --> F[Service Management]
         C -- Manages --> G[Broadcast Queue]
-        C -- Interacts with --> H{WindowManagerService (WMS)}
-        C -- Interacts with --> I{PackageManagerService (PMS)}
+        C -- Interacts with --> H
+        C -- Interacts with --> I
     end
 
-    E -- Requests Process Fork --> J((Zygote Process))
-    J -- Forks --> K[New Application Process]
-    H -- Manages --> L[Window/Surface]
+    J((Zygote Process))
+    K[New Application Process]
+    L[Window/Surface]
+
+    B -- Binder --> C
+    E -- Requests Process Fork --> J
+    J -- Forks --> K
+    H -- Manages --> L
 
     style C fill:#f9f,stroke:#333,stroke-width:2px
     style H fill:#ccf,stroke:#333,stroke-width:2px
