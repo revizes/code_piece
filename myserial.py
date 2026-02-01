@@ -66,10 +66,7 @@ if __name__ == "__main__":
         print("Failed: Timeout reached.")
 
     sm.write_string("revizes")
-    time.sleep(1)
-    sm.write_string("skdud.Wkd")
 
-    time.sleep(3)
 
     sm.write_string("ls -al")
 
